@@ -1,0 +1,39 @@
+/* :root bu root elementni belgilaydi va bu yerga xoxlagan qiymatlarni kirtsa bo'ladi */
+:root {
+	--red-color: #ff0000;
+}
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* :root ga qiymatlarni xoxlagan payt o'zgartirsa bo'ladi va u qaysi biri oxirgi yozilgan bo'lsa o'shani oladi */
+/* :root {
+	--red-color: #0000ff;
+}
+
+h1 {
+	color: var(--red-color);
+} */
+
+.main {
+	.main__title {
+		color: var(--red-color);
+    font-size: 80px;
+	}
+}

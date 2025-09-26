@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="uz">
+	<head>
+		<meta charset="UTF-8" />
+		<title>DOM Cheat Sheet - To‘liq izohli qo‘llanma</title>
+		<style>
+			body {
+				font-family: sans-serif;
+				padding: 20px;
+				background-color: #f4f4f4;
+			}
+			.box {
+				background: #fff;
+				padding: 20px;
+				margin-bottom: 20px;
+				border-left: 5px solid steelblue;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+			}
+			.highlight {
+				background-color: yellow;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- === Elementlarni tanlash === -->
+		<div class="box">
+			<h2 id="heading">1. Elementlarni tanlash</h2>
+			<p id="demoId">ID orqali tanlanadigan element</p>
+			<p class="demoClass">Class orqali tanlanadigan element</p>
+			<p name="demoName">Name atributi orqali tanlanadigan element</p>
+		</div>
+
+		<!-- === Yaratish va o‘zgartirish === -->
+		<div class="box" id="createBox">
+			<h2>2. Element yaratish va o‘zgartirish</h2>
+		</div>
+
+		<!-- === Style va class bilan ishlash === -->
+		<div class="box" id="styleBox">
+			<h2>3. Style va class qo‘llash</h2>
+		</div>
+
+		<!-- === Atributlar bilan ishlash === -->
+		<div class="box" id="attrBox">
+			<h2>4. Atributlar bilan ishlash</h2>
+		</div>
+
+		<!-- === Hodisalar bilan ishlash === -->
+		<div class="box">
+			<h2>5. Hodisalar bilan ishlash</h2>
+			<button id="btnClick">Tugmani bosing</button>
+			<p id="eventText">Hodisadan keyingi natija shu yerda chiqadi</p>
+		</div>
+
+		<!-- === Forma bilan ishlash === -->
+		<div class="box">
+			<h2>6. Forma bilan ishlash</h2>
+			<form id="myForm">
+				<input type="text" id="nameInput" placeholder="Ismingizni kiriting" />
+				<button type="submit">Jo'natish</button>
+			</form>
+			<p id="formResult">Bu yerga natija chiqadi</p>
+		</div>
+
+		<!-- === Traversal === -->
+		<div class="box" id="traversalBox">
+			<h2>7. Traversal (DOMda yurish)</h2>
+			<div id="parent">
+				<p id="child1">1-bola</p>
+				<p id="child2">2-bola</p>
+			</div>
+			<p id="traversalResult">Bu yerga yurish natijasi chiqadi</p>
+		</div>
+
+		<!-- === O‘chirish va almashtirish === -->
+		<div class="box" id="deleteBox">
+			<h2>8. O‘chirish va almashtirish</h2>
+		</div>
+
+		<script>
+			// === 1. Elementlarni tanlash ===
+			const elById = document.getElementById('demoId'); // getElementById — ID orqali tanlaydi
+			const elByClass = document.querySelector('.demoClass'); // querySelector — birinchi mos CSS selectorni tanlaydi
+			const elByName = document.querySelector("p[name='demoName']"); // atribut bo‘yicha tanlash
+
+			// === 2. Element yaratish va o‘zgartirish ===
+			const createBox = document.getElementById('createBox');
+
+			const newDiv = document.createElement('div'); // Yangi <div> elementi yaratamiz
+			newDiv.textContent = 'Yangi div DOM orqali yaratildi'; // textContent — oddiy matn o‘rnatadi
+			createBox.appendChild(newDiv); // appendChild — yangi elementni mavjud blok ichiga joylaydi
+
+			const htmlEl = document.createElement('p');
+			htmlEl.innerHTML = '<b>innerHTML</b> bilan HTML yozildi'; // innerHTML — HTMLni matn sifatida qo‘shadi
+			createBox.appendChild(htmlEl);
+
+			const textEl = document.createElement('p');
+			textEl.textContent = '<b>textContent</b> faqat matn sifatida chiqadi'; // HTML emas, faqat text ko‘rinadi
+			createBox.appendChild(textEl);
+
+			// === 3. Style va class bilan ishlash ===
+			const styleBox = document.getElementById('styleBox');
+
+			const styled = document.createElement('div');
+			styled.textContent = 'Style va classlar berilgan element';
+			styled.style.color = 'green'; // style.color — rang o‘zgartiradi
+			styled.style.fontSize = '20px'; // style.fontSize — shrift o‘lchamini o‘zgartiradi
+			styled.classList.add('highlight'); // classList.add() — class qo‘shadi
+			styleBox.appendChild(styled);
+
+			// === 4. Atributlar bilan ishlash ===
+			const attrBox = document.getElementById('attrBox');
+
+			const link = document.createElement('a');
+			link.setAttribute('href', 'https://example.com'); // setAttribute — atribut qo‘shadi
+			link.setAttribute('target', '_blank'); // _blank — yangi oynada ochadi
+			link.textContent = "Bu havola 'example.com' saytiga olib boradi";
+			attrBox.appendChild(link);
+
+			// === 5. Hodisalar bilan ishlash ===
+			const btn = document.getElementById('btnClick');
+			const eventText = document.getElementById('eventText');
+
+			btn.addEventListener('click', function () {
+				// .addEventListener() — foydalanuvchi harakati (click, input, submit)ga reaksiya qiladi
+				eventText.textContent = 'Tugma bosildi!';
+				eventText.style.color = 'blue';
+			});
+
+			// === 6. Forma bilan ishlash ===
+			const form = document.getElementById('myForm');
+			const nameInput = document.getElementById('nameInput');
+			const formResult = document.getElementById('formResult');
+
+			form.addEventListener('submit', function (e) {
+				e.preventDefault(); // Sahifa qayta yuklanmasin
+				formResult.textContent = `Ismingiz: ${nameInput.value}`; // Kiritilgan matnni chiqarish
+				nameInput.value = ''; // Input tozalanadi
+			});
+
+			// === 7. DOM Traversal (harakatlanish) ===
+			const child2 = document.getElementById('child2');
+			const parent = child2.parentNode; // parentNode — ota elementga qaytadi
+			const prevSibling = child2.previousElementSibling; // oldingi birodar element
+
+			const traversalResult = document.getElementById('traversalResult');
+			traversalResult.innerHTML = `
+      Ota element ID: <b>${parent.id}</b><br>
+      Oldingi element: <b>${prevSibling.textContent}</b>
+    `;
+
+			// === 8. O‘chirish va almashtirish ===
+			const deleteBox = document.getElementById('deleteBox');
+
+			const oldP = document.createElement('p');
+			oldP.textContent = 'Bu paragraf 3 soniyadan keyin almashtiriladi';
+			deleteBox.appendChild(oldP);
+
+			const newP = document.createElement('p');
+			newP.textContent = 'Bu yangi paragraf o‘rniga qo‘yildi';
+
+			// 3 soniyadan keyin element almashtiriladi
+			setTimeout(() => {
+				deleteBox.replaceChild(newP, oldP); // replaceChild() — eski element o‘rniga yangisini qo‘yadi
+			}, 3000);
+		</script>
+	</body>
+</html>
